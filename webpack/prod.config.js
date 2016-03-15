@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
@@ -44,5 +45,8 @@ module.exports = {
         'postcss'
       ]
     }]
+  },
+  postcss: function() {
+    return [autoprefixer];
   }
 };

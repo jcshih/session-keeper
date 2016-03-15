@@ -15,9 +15,13 @@ class App extends Component {
     return (
       <div className={styles.app}>
         <SideBar />
-        <Header />
-        <SessionPanel />
-        <CurrentPanel />
+        <div className={styles.main}>
+          <Header />
+          <div className={styles.panelContainer}>
+            <SessionPanel />
+            <CurrentPanel />
+          </div>
+        </div>
       </div>
     );
   }

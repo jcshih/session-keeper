@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import styles from './Panel.css';
+import { WindowList } from '.';
 
 class CurrentPanel extends Component {
 
@@ -13,29 +14,13 @@ class CurrentPanel extends Component {
     this.props.refresh();
   }
 
-  windowsList(windows) {
-    return windows.map(win => (
-      <div key={win.id}>
-        {this.tabsList(win.tabs)}
-      </div>
-    ));
-  }
-
-  tabsList(tabs) {
-    return tabs.map(tab => (
-      <div key={tab.id}>
-        {tab.title}
-      </div>
-    ));
-  }
-
   render() {
     const { windows, refresh } = this.props;
 
     return (
       <div className={styles.panel}>
         <button onClick={refresh}>refresh</button>
-        {this.windowsList(windows)}
+        <WindowList windows={windows} />
       </div>
     );
   }

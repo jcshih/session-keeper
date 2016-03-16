@@ -1,9 +1,12 @@
 const SET_CURRENT_WINDOWS = 'currentWindows/GET_CURRENT_WINDOWS';
+const DELETE_WINDOW = 'currentWindows/DELETE_WINDOW';
 
 const currentWindows = (state = [], action) => {
   switch (action.type) {
     case SET_CURRENT_WINDOWS:
       return action.windows;
+    case DELETE_WINDOW:
+      return state.filter(window => window.id !== action.id);
     default:
       return state;
   }
@@ -39,9 +42,15 @@ const getCurrentWindows = () => {
   };
 };
 
+const deleteWindow = (id) => ({
+  type: DELETE_WINDOW,
+  id
+});
+
 export default currentWindows;
 export {
   SET_CURRENT_WINDOWS,
   getCurrentWindows,
-  setCurrentWindows
+  setCurrentWindows,
+  deleteWindow
 };

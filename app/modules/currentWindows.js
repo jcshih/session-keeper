@@ -41,5 +41,7 @@ const getCurrentWindows = () => {
 
 export default currentWindows;
 export {
-  getCurrentWindows
+  SET_CURRENT_WINDOWS,
+  getCurrentWindows,
+  setCurrentWindows
 };

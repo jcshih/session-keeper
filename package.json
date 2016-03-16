@@ -10,7 +10,7 @@
     "clean": "rimraf build/ dev/ *.zip *.crx",
     "lint": "eslint app chrome test scripts",
     "test-e2e": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require co-mocha test/e2e",
-    "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ./test/setup-app test/app"
+    "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --compilers js:babel-core/register --recursive --require ./test/setup-app test/app"
   },
   "repository": {
     "type": "git",
@@ -51,6 +51,7 @@
     "selenium-webdriver": "^2.47.0",
     "shelljs": "^0.6.0",
     "sinon": "^1.17.1",
+    "sinon-chrome": "^1.1.2",
     "style-loader": "^0.12.3",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.10.1"

@@ -11,8 +11,7 @@
     "128": "img/icon-128.png"
   },
   "background": {
-    "scripts": ["js/open.bundle.js"],
-    "persistent": false
+    "scripts": ["js/background.bundle.js"]
   },
   "permissions": [ "tabs", "storage" ],
   "content_security_policy": "default-src 'self'; script-src 'self'; style-src * 'unsafe-inline'; img-src 'self' data:;"

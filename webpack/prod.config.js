@@ -4,8 +4,7 @@ const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
-    open: path.join(__dirname, '../chrome/extension/open'),
-    todoapp: path.join(__dirname, '../chrome/extension/todoapp'),
+    app: path.join(__dirname, '../chrome/extension/app'),
     background: path.join(__dirname, '../chrome/extension/background')
   },
   output: {

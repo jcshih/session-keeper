@@ -1,24 +1,19 @@
-const bluebird = require('bluebird');
-global.Promise = bluebird;
-
-function promisifier(method) {
-  return function promisified(...args) {
-    return new Promise((resolve, reject) => {
-      args.push(resolve);
-      method.apply(this, args);
-    });
-  };
-}
-
-function promisifyAll(obj, list) {
-  list.forEach(api => bluebird.promisifyAll(obj[api], { promisifier }));
-}
-
-promisifyAll(chrome, [
-  'tabs',
-  'windows',
-  'browserAction'
-]);
-promisifyAll(chrome.storage, [
-  'local',
-]);
+chrome.browserAction.onClicked.addListener(() => {
+  const mainURL = chrome.extension.getURL('main.html');
+  chrome.tabs.query({
+    url: mainURL
+  }, tabs => {
+    if (tabs.length === 0) {
+      chrome.tabs.create({
+        url: mainURL,
+        selected: true
+      });
+    } else {
+      for (let i = 1; i < tabs.length; i++) {
+        chrome.tabs.remove(tabs[i].id);
+      }
+      chrome.tabs.update(tabs[0].id, { active: true });
+      chrome.windows.update(tabs[0].windowId, { focused: true });
+    }
+  });
+});

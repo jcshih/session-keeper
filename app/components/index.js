@@ -1,4 +1,3 @@
-export Header from './Header';
 export Window from './Window';
 export WindowList from './WindowList';
 export Tab from './Tab';

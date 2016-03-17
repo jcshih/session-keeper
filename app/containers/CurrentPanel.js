@@ -39,7 +39,7 @@ class CurrentPanel extends Component {
   }
 
   componentWillMount() {
-    this.handleRefresh();
+    this.props.actions.getCurrentWindows();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -79,29 +79,24 @@ class CurrentPanel extends Component {
     }
   }
 
-  handleRefresh() {
-    this.props.actions.getCurrentWindows();
-  }
-
-  handleDeleteWindow(id) {
-    this.props.actions.deleteWindow(id);
-  }
-
-  handleDeleteTab(windowId, id) {
-    this.props.actions.deleteTab(windowId, id);
-  }
-
   render() {
-    const { windows } = this.props;
+    const {
+      windows,
+      actions: {
+        getCurrentWindows,
+        deleteWindow,
+        deleteTab
+      }
+    } = this.props;
 
     return (
       <div className={styles.panel}>
-        <button onClick={this.handleRefresh.bind(this)}>refresh</button>
+        <button onClick={getCurrentWindows}>refresh</button>
         <button onClick={this.openModal.bind(this)}>save</button>
         <WindowList
             windows={windows}
-            deleteWindow={this.handleDeleteWindow.bind(this)}
-            deleteTab={this.handleDeleteTab.bind(this)} />
+            deleteWindow={deleteWindow}
+            deleteTab={deleteTab} />
         <Modal
             style={modalStyles}
             isOpen={this.state.modalIsOpen}

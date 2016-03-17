@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import styles from './Panel.css';
 import { WindowList } from '../components';
 
+import { deleteWindow, deleteTab } from '../modules/sessions';
+
 class SessionPanel extends Component {
 
   static propTypes = {
@@ -13,15 +15,21 @@ class SessionPanel extends Component {
   };
 
   render() {
-    const { activeSessionId, sessions } = this.props;
+    const {
+      activeSessionId,
+      sessions,
+      actions: { deleteWindow, deleteTab }
+    } = this.props;
     const activeSession = sessions.find(({ id: id }) => id === activeSessionId);
 
     return (
       <div className={styles.panel}>
         {activeSession
-         ? <WindowList
-               windows={activeSession.windows} />
-         : null}
+          ? <WindowList
+                windows={activeSession.windows}
+                deleteWindow={deleteWindow}
+                deleteTab={deleteTab} />
+          : null}
       </div>
     );
   }
@@ -33,6 +41,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    deleteWindow,
+    deleteTab
+  }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SessionPanel);

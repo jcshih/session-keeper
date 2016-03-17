@@ -33,9 +33,36 @@ const sessions = (state = initialState, action) => {
         activeSessionId: action.id
       };
     case DELETE_WINDOW:
-      return state;
+      return {
+        ...state,
+        list: state.list.map(session =>
+          session.id === state.activeSessionId
+          ? {
+            ...session,
+            windows: session.windows.filter(win => win.id !== action.id)
+          }
+          : session
+        )
+      };
     case DELETE_TAB:
-      return state;
+      return {
+        ...state,
+        list: state.list.map(session =>
+          session.id === state.activeSessionId
+          ? {
+            ...session,
+            windows: session.windows.map(win =>
+              win.id === action.windowId
+              ? {
+                ...win,
+                tabs: win.tabs.filter(tab => tab.id !== action.id)
+              }
+              : win
+            )
+          }
+          : session
+        )
+      };
     default:
       return state;
   }

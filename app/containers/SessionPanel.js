@@ -3,9 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import styles from './Panel.css';
-import { WindowList } from '../components';
+import { WindowList, ButtonModal } from '../components';
 
-import { deleteWindow, deleteTab } from '../modules/sessions';
+import {
+  renameSession,
+  deleteWindow,
+  deleteTab
+} from '../modules/sessions';
 
 class SessionPanel extends Component {
 
@@ -13,6 +17,10 @@ class SessionPanel extends Component {
     sessions: PropTypes.array.isRequired,
     activeSessionId: PropTypes.string
   };
+
+  handleRename(name) {
+    this.props.actions.renameSession(name);
+  }
 
   render() {
     const {
@@ -24,13 +32,21 @@ class SessionPanel extends Component {
 
     return (
       <div className={styles.panel}>
-        <h2>{activeSession ? activeSession.name : null}</h2>
         {activeSession
-          ? <WindowList
-                windows={activeSession.windows}
-                deleteWindow={deleteWindow}
-                deleteTab={deleteTab} />
-          : null}
+          ? (
+            <div>
+              <h2>{activeSession.name}</h2>
+              <ButtonModal
+                  title="rename session"
+                  buttonText="rename"
+                  onOk={this.handleRename.bind(this)} />
+              <WindowList
+                  windows={activeSession.windows}
+                  deleteWindow={deleteWindow}
+                  deleteTab={deleteTab} />
+            </div>
+          )
+           : null}
       </div>
     );
   }
@@ -43,6 +59,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({
+    renameSession,
     deleteWindow,
     deleteTab
   }, dispatch)

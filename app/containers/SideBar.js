@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import styles from './SideBar.css';
 import { SessionList } from '../components';
+import { setActiveSession } from '../modules/sessions';
 
 class SideBar extends Component {
 
@@ -11,18 +13,26 @@ class SideBar extends Component {
   };
 
   render() {
-    const { sessions } = this.props;
+    const { sessions, actions: { setActiveSession } } = this.props;
 
     return (
       <div className={styles.sideBar}>
-        <SessionList sessions={sessions} />
+        <SessionList
+            sessions={sessions}
+            setActive={setActiveSession} />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  sessions: state.sessions
+  sessions: state.sessions.list
 });
 
-export default connect(mapStateToProps)(SideBar);
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    setActiveSession
+  }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

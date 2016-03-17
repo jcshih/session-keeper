@@ -1,17 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 
+import styles from './Session.css';
+
 class Session extends Component {
 
   static propTypes = {
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    windows: PropTypes.array.isRequired
+    windows: PropTypes.array.isRequired,
+    setActive: PropTypes.func.isRequired,
+    isActive: PropTypes.bool.isRequired
   };
 
   render() {
-    const { name, windows } = this.props;
+    const { id, name, windows, setActive, isActive } = this.props;
 
     return (
-      <div>
+      <div
+          onClick={() => setActive(id)}
+          className={isActive ? styles.active : ''}>
         {name}
       </div>
     );

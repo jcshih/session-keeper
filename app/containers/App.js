@@ -4,11 +4,11 @@ import 'normalize.css';
 import styles from './App.css';
 import {
   SessionPanel,
-  CurrentPanel
+  CurrentPanel,
+  SideBar
 } from '.';
 import {
-  Header,
-  SideBar
+  Header
 } from '../components';
 
 class App extends Component {

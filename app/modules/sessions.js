@@ -3,10 +3,10 @@ const SAVE = 'sessions/SAVE';
 const sessions = (state = [], action) => {
   switch (action.type) {
     case SAVE:
-      console.log('save', action);
       const { name, windows } = action.session;
       return [
         {
+          id: Math.random().toString().slice(2),
           name: name,
           windows: windows
         },

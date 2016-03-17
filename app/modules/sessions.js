@@ -1,3 +1,5 @@
+import update from 'react/lib/update';
+
 /* Constants */
 const SAVE = 'sessions/SAVE';
 const SET_ACTIVE_SESSION = 'sessions/SET_ACTIVE_SESSION';
@@ -16,66 +18,82 @@ const sessions = (state = initialState, action) => {
     case SAVE:
       const { name, windows } = action.session;
       const id = Math.random().toString().slice(2);
-      return {
-        ...state,
-        activeSessionId: id,
-        list: [
-          {
-            id: id,
-            name: name,
-            windows: windows
-          },
-          ...state.list
-        ]
-      };
+      return update(state, {
+        activeSessionId: { $set: id },
+        list: {
+          $unshift: [{ id, name, windows }]
+        }
+      });
     case SET_ACTIVE_SESSION:
-      return {
-        ...state,
-        activeSessionId: action.id
-      };
+      return update(state, {
+        activeSessionId: { $set: action.id }
+      });
     case DELETE_SESSION:
       const index = state.list.findIndex(session => session.id === action.id);
       const activeId = state.activeSessionId === state.list[index].id
         ? null : state.activeSessionId;
-      return {
-        ...state,
-        list: [
-          ...state.list.slice(0, index),
-          ...state.list.slice(index + 1)
-        ],
-        activeSessionId: activeId
-      };
+      return update(state, {
+        activeSessionId: { $set: activeId },
+        list: {
+          $splice: [[ index, 1 ]]
+        }
+      });
     case DELETE_WINDOW:
-      return {
-        ...state,
-        list: state.list.map(session =>
-          session.id === state.activeSessionId
-          ? {
-            ...session,
-            windows: session.windows.filter(win => win.id !== action.id)
-          }
-          : session
-        )
-      };
+      return window(state, action);
     case DELETE_TAB:
-      return {
-        ...state,
-        list: state.list.map(session =>
-          session.id === state.activeSessionId
-          ? {
-            ...session,
-            windows: session.windows.map(win =>
-              win.id === action.windowId
-              ? {
-                ...win,
-                tabs: win.tabs.filter(tab => tab.id !== action.id)
-              }
-              : win
-            )
+      return tab(state, action);
+    default:
+      return state;
+  }
+};
+
+const window = (state, action) => {
+  switch (action.type) {
+    case DELETE_WINDOW:
+      const sessionIndex = state.list
+                                .findIndex(s => s.id === state.activeSessionId);
+      const windowIndex = state.list[sessionIndex]
+                               .windows
+                               .findIndex(win => win.id === action.id);
+      return update(state, {
+        list: {
+          [sessionIndex]: {
+            windows: {
+              $splice: [[ windowIndex, 1 ]]
+            }
           }
-          : session
-        )
-      };
+        }
+      });
+    default:
+      return state;
+  }
+};
+
+const tab = (state, action) => {
+  switch (action.type) {
+    case DELETE_TAB:
+      const sessionIndex = state.list
+                                .findIndex(s => s.id === state.activeSessionId);
+      const windowIndex = state.list[sessionIndex]
+                               .windows
+                               .findIndex(win => win.id === action.windowId);
+      const tabIndex = state.list[sessionIndex]
+                            .windows[windowIndex]
+                            .tabs
+                            .findIndex(tab => tab.id === action.id);
+      return update(state, {
+        list: {
+          [sessionIndex]: {
+            windows: {
+              [windowIndex]: {
+                tabs: {
+                  $splice: [[ tabIndex, 1 ]]
+                }
+              }
+            }
+          }
+        }
+      });
     default:
       return state;
   }

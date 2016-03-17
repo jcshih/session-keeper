@@ -1,3 +1,5 @@
+import update from 'react/lib/update';
+
 /* Constants */
 const SET_CURRENT_WINDOWS = 'currentWindows/GET_CURRENT_WINDOWS';
 const DELETE_WINDOW = 'currentWindows/DELETE_WINDOW';
@@ -9,24 +11,20 @@ const currentWindows = (state = [], action) => {
     case SET_CURRENT_WINDOWS:
       return action.windows;
     case DELETE_WINDOW:
-      return state.filter(window => window.id !== action.id);
+      return update(state, {
+        $splice: [[ state.findIndex(win => win.id === action.id), 1 ]]
+      });
     case DELETE_TAB:
       const { windowId, id } = action;
-      return state.map(window => (
-        window.id === windowId ? currentWindow(window, action) : window
-      ));
-    default:
-      return state;
-  }
-};
-
-const currentWindow = (state, action) => {
-  switch (action.type) {
-    case DELETE_TAB:
-      return {
-        ...state,
-        tabs: state.tabs.filter(tab => tab.id !== action.id)
-      };
+      const windowIndex = state.findIndex(win => win.id === windowId);
+      const tabIndex = state[windowIndex].tabs.findIndex(tab => tab.id === id);
+      return update(state, {
+        [windowIndex]: {
+          tabs: {
+            $splice: [[ tabIndex, 1]]
+          }
+        }
+      });
     default:
       return state;
   }

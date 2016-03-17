@@ -42,25 +42,27 @@ const getCurrentWindows = () => {
   return (dispatch) => {
     chrome.windows
           .getAllAsync({ populate: true, windowTypes: [ 'normal' ] })
-          .then(windows => {
-            chrome.tabs.getCurrentAsync()
-                  .then(tab => [ windows, tab.id ])
-                  .then(([ windows, currentTabId ]) => {
-                    windows = windows.map(win => ({
-                      id: win.id,
-                      tabs: win.tabs
-                               .filter(tab => tab.id !== currentTabId)
-                               .map(tab => ({
-                                 id: tab.id,
-                                 title: tab.title,
-                                 url: tab.url,
-                                 favIconUrl: tab.favIconUrl
-                               }))
-                    }));
-                    dispatch(setCurrentWindows(windows));
-                  });
-          });
+          .then(windows => getTabs(windows, dispatch));
   };
+};
+
+const getTabs = (windows, dispatch) => {
+  chrome.tabs.getCurrentAsync()
+        .then(tab => [ windows, tab.id ])
+        .then(([ windows, currentTabId ]) => {
+          windows = windows.map(win => ({
+            id: `win.id-${Math.random().toString().slice(2)}`,
+            tabs: win.tabs
+                     .filter(tab => tab.id !== currentTabId)
+                     .map(tab => ({
+                       id: `tab.id-${Math.random().toString().slice(2)}`,
+                       title: tab.title,
+                       url: tab.url,
+                       favIconUrl: tab.favIconUrl
+                     }))
+          }));
+          dispatch(setCurrentWindows(windows));
+        });
 };
 
 const deleteWindow = (id) => ({

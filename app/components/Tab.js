@@ -4,7 +4,7 @@ class Tab extends Component {
 
   static propTypes = {
     tab: PropTypes.object.isRequired,
-    windowId: PropTypes.number.isRequired,
+    windowId: PropTypes.string.isRequired,
     deleteTab: PropTypes.func.isRequired
   };
 

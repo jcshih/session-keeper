@@ -6,7 +6,7 @@ class TabList extends Component {
 
   static propTypes = {
     tabs: PropTypes.array.isRequired,
-    windowId: PropTypes.number.isRequired,
+    windowId: PropTypes.string.isRequired,
     deleteTab: PropTypes.func.isRequired
   };
 

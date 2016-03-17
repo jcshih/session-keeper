@@ -11,7 +11,7 @@ class SessionPanel extends Component {
 
   static propTypes = {
     sessions: PropTypes.array.isRequired,
-    activeSessionId: PropTypes.string.isRequired
+    activeSessionId: PropTypes.string
   };
 
   render() {

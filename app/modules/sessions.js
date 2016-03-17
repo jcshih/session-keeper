@@ -1,6 +1,7 @@
 /* Constants */
 const SAVE = 'sessions/SAVE';
 const SET_ACTIVE_SESSION = 'sessions/SET_ACTIVE_SESSION';
+const DELETE_SESSION = 'sessions/DELETE_SESSION';
 const DELETE_WINDOW = 'sessions/DELETE_WINDOW';
 const DELETE_TAB = 'sessions/DELETE_TAB';
 
@@ -31,6 +32,18 @@ const sessions = (state = initialState, action) => {
       return {
         ...state,
         activeSessionId: action.id
+      };
+    case DELETE_SESSION:
+      const index = state.list.findIndex(session => session.id === action.id);
+      const activeId = state.activeSessionId === state.list[index].id
+        ? null : state.activeSessionId;
+      return {
+        ...state,
+        list: [
+          ...state.list.slice(0, index),
+          ...state.list.slice(index + 1)
+        ],
+        activeSessionId: activeId
       };
     case DELETE_WINDOW:
       return {
@@ -79,6 +92,11 @@ const setActiveSession = (id) => ({
   id
 });
 
+const deleteSession = (id) => ({
+  type: DELETE_SESSION,
+  id
+});
+
 const deleteWindow = (id) => ({
   type: DELETE_WINDOW,
   id
@@ -94,6 +112,7 @@ export default sessions;
 export {
   saveSession,
   setActiveSession,
+  deleteSession,
   deleteWindow,
   deleteTab
 };

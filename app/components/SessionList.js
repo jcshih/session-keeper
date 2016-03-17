@@ -6,11 +6,12 @@ class SessionList extends Component {
 
   static propTypes = {
     sessions: PropTypes.array.isRequired,
-    setActive: PropTypes.func.isRequired
+    setActive: PropTypes.func.isRequired,
+    deleteSession: PropTypes.func.isRequired
   };
 
   render() {
-    const { sessions, setActive } = this.props;
+    const { sessions, setActive, deleteSession } = this.props;
 
     return (
       <div>
@@ -19,6 +20,7 @@ class SessionList extends Component {
               name={session.name}
               windows={session.windows}
               setActive={setActive}
+              deleteSession={deleteSession}
               id={session.id}
               key={session.id} />
          )}

@@ -24,6 +24,7 @@ class SessionPanel extends Component {
 
     return (
       <div className={styles.panel}>
+        <h2>{activeSession ? activeSession.name : null}</h2>
         {activeSession
           ? <WindowList
                 windows={activeSession.windows}

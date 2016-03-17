@@ -6,11 +6,12 @@ class WindowList extends Component {
 
   static propTypes = {
     windows: PropTypes.array.isRequired,
-    deleteWindow: PropTypes.func.isRequired
+    deleteWindow: PropTypes.func.isRequired,
+    deleteTab: PropTypes.func.isRequired
   };
 
   render() {
-    const { windows, deleteWindow } = this.props;
+    const { windows, deleteWindow, deleteTab } = this.props;
 
     return (
       <div>
@@ -19,6 +20,7 @@ class WindowList extends Component {
               name={`Window ${i}`}
               tabs={window.tabs}
               deleteWindow={deleteWindow}
+              deleteTab={deleteTab}
               id={window.id}
               key={window.id} />
          )}

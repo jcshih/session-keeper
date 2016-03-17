@@ -7,11 +7,12 @@ class Window extends Component {
   static propTypes = {
     tabs: PropTypes.array.isRequired,
     name: PropTypes.string.isRequired,
-    deleteWindow: PropTypes.func.isRequired
+    deleteWindow: PropTypes.func.isRequired,
+    deleteTab: PropTypes.func.isRequired
   };
 
   render() {
-    const { tabs, name, id, deleteWindow } = this.props;
+    const { tabs, name, id, deleteWindow, deleteTab } = this.props;
 
     return (
       <div>
@@ -19,7 +20,10 @@ class Window extends Component {
           <button onClick={() => deleteWindow(id)}>x</button>
           {name}
         </h2>
-        <TabList tabs={tabs} />
+        <TabList
+            tabs={tabs}
+            windowId={id}
+            deleteTab={deleteTab} />
       </div>
     );
   }

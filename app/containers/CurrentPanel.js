@@ -7,7 +7,8 @@ import { WindowList } from '../components';
 
 import {
   getCurrentWindows,
-  deleteWindow
+  deleteWindow,
+  deleteTab
 } from '../modules/currentWindows';
 import { saveSession } from '../modules/sessions';
 
@@ -34,6 +35,10 @@ class CurrentPanel extends Component {
     this.props.actions.deleteWindow(id);
   }
 
+  handleDeleteTab(windowId, id) {
+    this.props.actions.deleteTab(windowId, id);
+  }
+
   render() {
     const { windows } = this.props;
 
@@ -43,7 +48,8 @@ class CurrentPanel extends Component {
         <button onClick={this.handleSave.bind(this)}>save</button>
         <WindowList
             windows={windows}
-            deleteWindow={this.handleDeleteWindow.bind(this)} />
+            deleteWindow={this.handleDeleteWindow.bind(this)}
+            deleteTab={this.handleDeleteTab.bind(this)} />
       </div>
     );
   }
@@ -57,6 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({
     getCurrentWindows,
     deleteWindow,
+    deleteTab,
     saveSession
   }, dispatch)
 });

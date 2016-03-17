@@ -5,17 +5,21 @@ import { Tab } from '.';
 class TabList extends Component {
 
   static propTypes = {
-    tabs: PropTypes.array.isRequired
+    tabs: PropTypes.array.isRequired,
+    windowId: PropTypes.number.isRequired,
+    deleteTab: PropTypes.func.isRequired
   };
 
   render() {
-    const { tabs } = this.props;
+    const { tabs, windowId, deleteTab } = this.props;
 
     return (
       <div>
         {tabs.map(tab =>
           <Tab
               tab={tab}
+              windowId={windowId}
+              deleteTab={deleteTab}
               key={tab.id} />
          )}
       </div>

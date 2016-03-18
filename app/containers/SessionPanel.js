@@ -39,6 +39,7 @@ class SessionPanel extends Component {
               <ButtonModal
                   title="rename session"
                   buttonText="rename"
+                  defaultValue={activeSession.name}
                   onOk={this.handleRename.bind(this)} />
               <WindowList
                   windows={activeSession.windows}

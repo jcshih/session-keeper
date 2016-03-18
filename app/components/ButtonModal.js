@@ -20,23 +20,28 @@ class ButtonModal extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     buttonText: PropTypes.string.isRequired,
-    onOk: PropTypes.func.isRequired
+    onOk: PropTypes.func.isRequired,
+    defaultValue: PropTypes.string
+  };
+
+  static defaultProps = {
+    defaultValue: ''
   };
 
   constructor(props) {
     super(props);
-    this.state = { modalIsOpen: false, value: '' };
+    this.state = { modalIsOpen: false, value: props.defaultValue };
   }
 
   componentDidUpdate(prevProps, prevState) {
     const modalIsOpen = this.state.modalIsOpen;
     if (prevState.modalIsOpen !== modalIsOpen && modalIsOpen) {
-      setTimeout(() => ReactDOM.findDOMNode(this.refs.valueInput).focus(), 0);
+      setTimeout(() => ReactDOM.findDOMNode(this.refs.valueInput).select(), 0);
     }
   }
 
   openModal() {
-    this.setState({ modalIsOpen: true, value: '' });
+    this.setState({ modalIsOpen: true, value: this.props.defaultValue });
   }
 
   closeModal() {
@@ -62,7 +67,7 @@ class ButtonModal extends Component {
   }
 
   render() {
-    const { title, buttonText } = this.props;
+    const { title, buttonText, defaultValue } = this.props;
 
     return (
       <div>
@@ -75,6 +80,7 @@ class ButtonModal extends Component {
           <input
               onChange={this.handleInput.bind(this)}
               onKeyPress={this.handleKeyPress.bind(this)}
+              value={this.state.value}
               ref="valueInput" />
           <button onClick={this.handleOk.bind(this)}>ok</button>
           <button onClick={this.closeModal.bind(this)}>cancel</button>

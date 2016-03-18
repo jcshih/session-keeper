@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import 'normalize.css';
 import styles from './App.css';
@@ -22,5 +24,7 @@ class App extends Component {
     );
   }
 }
+
+App = DragDropContext(HTML5Backend)(App);
 
 export default App;

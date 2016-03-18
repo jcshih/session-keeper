@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { DropTarget, DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { DropTarget } from 'react-dnd';
 
 import { ActiveSession } from '../containers';
 import { SESSION } from '../constants';
@@ -57,6 +56,5 @@ class SessionList extends Component {
 SessionList = DropTarget(SESSION, sessionTarget, connect => ({
   connectDropTarget: connect.dropTarget()
 }))(SessionList);
-SessionList = DragDropContext(HTML5Backend)(SessionList);
 
 export default SessionList;

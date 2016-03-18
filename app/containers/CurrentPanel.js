@@ -41,17 +41,21 @@ class CurrentPanel extends Component {
     } = this.props;
 
     return (
-      <div className={styles.panel}>
-        <h2>Current Windows</h2>
-        <button onClick={getCurrentWindows}>refresh</button>
-        <ButtonModal
-            title="enter name"
-            buttonText="save"
-            onOk={this.handleSave.bind(this)} />
-        <WindowList
-            windows={windows}
-            deleteWindow={deleteWindow}
-            deleteTab={deleteTab} />
+      <div className={styles.panelContainer}>
+        <div className={styles.panelHeader}>
+          <h2>Current Windows</h2>
+          <button onClick={getCurrentWindows}>refresh</button>
+          <ButtonModal
+              title="enter name"
+              buttonText="save"
+              onOk={this.handleSave.bind(this)} />
+        </div>
+        <div className={styles.panel}>
+          <WindowList
+              windows={windows}
+              deleteWindow={deleteWindow}
+              deleteTab={deleteTab} />
+        </div>
       </div>
     );
   }

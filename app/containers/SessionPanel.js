@@ -30,26 +30,28 @@ class SessionPanel extends Component {
     } = this.props;
     const activeSession = sessions.find(({ id: id }) => id === activeSessionId);
 
-    return (
-      <div className={styles.panel}>
-        {activeSession
-          ? (
-            <div>
-              <h2>{activeSession.name}</h2>
-              <ButtonModal
-                  title="rename session"
-                  buttonText="rename"
-                  defaultValue={activeSession.name}
-                  onOk={this.handleRename.bind(this)} />
-              <WindowList
-                  windows={activeSession.windows}
-                  deleteWindow={deleteWindow}
-                  deleteTab={deleteTab} />
-            </div>
-          )
-           : null}
-      </div>
-    );
+    return activeSession
+      ? (
+        <div className={styles.panelContainer}>
+          <div className={styles.panelHeader}>
+            <h2>{activeSession.name}</h2>
+            <ButtonModal
+                title="rename session"
+                buttonText="rename"
+                defaultValue={activeSession.name}
+                onOk={this.handleRename.bind(this)} />
+          </div>
+          <div className={styles.panel}>
+            <WindowList
+                windows={activeSession.windows}
+                deleteWindow={deleteWindow}
+                deleteTab={deleteTab} />
+          </div>
+        </div>
+      )
+      : (
+        <div className={styles.panelContainer}></div>
+      );
   }
 }
 

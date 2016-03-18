@@ -41,7 +41,7 @@ class CurrentPanel extends Component {
     } = this.props;
 
     return (
-      <div className={styles.panelContainer}>
+      <div className={styles.panel}>
         <div className={styles.panelHeader}>
           <h2>Current Windows</h2>
           <button onClick={getCurrentWindows}>refresh</button>
@@ -50,7 +50,7 @@ class CurrentPanel extends Component {
               buttonText="save"
               onOk={this.handleSave.bind(this)} />
         </div>
-        <div className={styles.panel}>
+        <div className={styles.panelBody}>
           <WindowList
               windows={windows}
               deleteWindow={deleteWindow}

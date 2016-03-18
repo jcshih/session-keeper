@@ -32,7 +32,7 @@ class SessionPanel extends Component {
 
     return activeSession
       ? (
-        <div className={styles.panelContainer}>
+        <div className={styles.panel}>
           <div className={styles.panelHeader}>
             <h2>{activeSession.name}</h2>
             <ButtonModal
@@ -41,7 +41,7 @@ class SessionPanel extends Component {
                 defaultValue={activeSession.name}
                 onOk={this.handleRename.bind(this)} />
           </div>
-          <div className={styles.panel}>
+          <div className={styles.panelBody}>
             <WindowList
                 windows={activeSession.windows}
                 deleteWindow={deleteWindow}
@@ -50,7 +50,7 @@ class SessionPanel extends Component {
         </div>
       )
       : (
-        <div className={styles.panelContainer}></div>
+        <div className={styles.panel}></div>
       );
   }
 }

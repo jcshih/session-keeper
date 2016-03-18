@@ -14,12 +14,6 @@
   flex-direction: column;
 }
 
-.panelContainer {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-}
-
 ::-webkit-scrollbar {
   width: 10px;
 }

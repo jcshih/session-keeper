@@ -4,9 +4,8 @@ import 'normalize.css';
 import styles from './App.css';
 import {
   Header,
-  SessionPanel,
-  CurrentPanel,
-  SideBar
+  SideBar,
+  PanelContainer
 } from '.';
 
 class App extends Component {
@@ -17,10 +16,7 @@ class App extends Component {
         <SideBar />
         <div className={styles.main}>
           <Header />
-          <div className={styles.panelContainer}>
-            <SessionPanel />
-            <CurrentPanel />
-          </div>
+          <PanelContainer />
         </div>
       </div>
     );

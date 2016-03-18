@@ -1,22 +1,47 @@
 import React, { Component, PropTypes } from 'react';
+import { DropTarget, DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import { ActiveSession } from '../containers';
+import { SESSION } from '../constants';
+
+const sessionTarget = {
+  drop() {
+  }
+};
 
 class SessionList extends Component {
 
   static propTypes = {
     sessions: PropTypes.array.isRequired,
     setActive: PropTypes.func.isRequired,
-    deleteSession: PropTypes.func.isRequired
+    deleteSession: PropTypes.func.isRequired,
+    moveSession: PropTypes.func.isRequired,
+    connectDropTarget: PropTypes.func.isRequired
   };
 
-  render() {
-    const { sessions, setActive, deleteSession } = this.props;
+  findSession(id) {
+    const index = this.props.sessions.findIndex(s => s.id === id);
+    return {
+      index,
+      session: this.props.sessions[index]
+    };
+  }
 
-    return (
+  moveSession(id, toIndex) {
+    const { index, session } = this.findSession(id);
+    this.props.moveSession(session, index, toIndex);
+  }
+
+  render() {
+    const { sessions, setActive, deleteSession, connectDropTarget } = this.props;
+
+    return connectDropTarget(
       <div>
         {sessions.map(session =>
           <ActiveSession
+              findSession={this.findSession.bind(this)}
+              moveSession={this.moveSession.bind(this)}
               name={session.name}
               windows={session.windows}
               setActive={setActive}
@@ -28,5 +53,10 @@ class SessionList extends Component {
     );
   }
 }
+
+SessionList = DropTarget(SESSION, sessionTarget, connect => ({
+  connectDropTarget: connect.dropTarget()
+}))(SessionList);
+SessionList = DragDropContext(HTML5Backend)(SessionList);
 
 export default SessionList;

@@ -4,6 +4,7 @@ import update from 'react/lib/update';
 const SAVE = 'sessions/SAVE';
 const SET_ACTIVE_SESSION = 'sessions/SET_ACTIVE_SESSION';
 const RENAME_SESSION = 'sessions/RENAME_SESSION';
+const MOVE_SESSION = 'session/MOVE_SESSION';
 const DELETE_SESSION = 'sessions/DELETE_SESSION';
 const DELETE_WINDOW = 'sessions/DELETE_WINDOW';
 const DELETE_TAB = 'sessions/DELETE_TAB';
@@ -39,6 +40,15 @@ const sessions = (state = initialState, action) => {
               name: action.name
             }
           }
+        }
+      });
+    case MOVE_SESSION:
+      return update(state, {
+        list: {
+          $splice: [
+            [ action.fromIndex, 1 ],
+            [ action.toIndex, 0, action.session ]
+          ]
         }
       });
     case DELETE_SESSION:
@@ -128,6 +138,13 @@ const renameSession = (name) => ({
   name
 });
 
+const moveSession = (session, fromIndex, toIndex) => ({
+  type: MOVE_SESSION,
+  session,
+  fromIndex,
+  toIndex
+});
+
 const deleteSession = (id) => ({
   type: DELETE_SESSION,
   id
@@ -149,6 +166,7 @@ export {
   saveSession,
   setActiveSession,
   renameSession,
+  moveSession,
   deleteSession,
   deleteWindow,
   deleteTab

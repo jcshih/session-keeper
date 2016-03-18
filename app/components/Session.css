@@ -1,3 +1,11 @@
+.session {
+  height: 30px;
+}
+
 .active {
   background: yellow;
+}
+
+.opaque {
+  opacity: 0;
 }

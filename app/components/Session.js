@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import classNames from 'classnames';
 
 import styles from './Session.css';
 
@@ -10,7 +11,10 @@ class Session extends Component {
     windows: PropTypes.array.isRequired,
     deleteSession: PropTypes.func.isRequired,
     setActive: PropTypes.func.isRequired,
-    isActive: PropTypes.bool.isRequired
+    isActive: PropTypes.bool.isRequired,
+    connectDragSource: PropTypes.func.isRequired,
+    connectDropTarget: PropTypes.func.isRequired,
+    isDragging: PropTypes.bool.isRequired
   };
 
   handleDelete(e) {
@@ -21,17 +25,23 @@ class Session extends Component {
 
   render() {
     const {
-      id, name, windows, setActive, isActive
+      id, name, windows, setActive, isActive,
+      connectDragSource, connectDropTarget, isDragging
     } = this.props;
+    const classes = classNames(
+      styles.session,
+      isActive ? styles.active : '',
+      isDragging ? styles.opaque : ''
+    );
 
-    return (
+    return connectDragSource(connectDropTarget(
       <div
           onClick={() => setActive(id)}
-          className={isActive ? styles.active : ''}>
+          className={classes}>
         {name}
         <button onClick={this.handleDelete.bind(this)}>x</button>
       </div>
-    );
+    ));
   }
 }
 

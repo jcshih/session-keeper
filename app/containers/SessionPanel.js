@@ -16,11 +16,20 @@ class SessionPanel extends Component {
 
   static propTypes = {
     sessions: PropTypes.array.isRequired,
-    activeSessionId: PropTypes.string
+    activeSessionId: PropTypes.string,
+    activeSession: PropTypes.object.isRequired
   };
 
   handleRename(name) {
     this.props.actions.renameSession(name);
+  }
+
+  restoreSession() {
+    this.props.activeSession.windows.forEach(w =>
+      chrome.windows.create({
+        url: w.tabs.map(t => t.url)
+      })
+    );
   }
 
   render() {
@@ -35,12 +44,19 @@ class SessionPanel extends Component {
       ? (
         <div className={styles.panel}>
           <div className={styles.panelHeader}>
-            <h2>{activeSession.name}</h2>
-            <ButtonModal
-                title="rename session"
-                buttonText="rename"
-                defaultValue={activeSession.name}
-                onOk={this.handleRename.bind(this)} />
+            <h2>
+              {activeSession.name}
+            </h2>
+            <div className={styles.panelHeaderMenu}>
+              <ButtonModal
+                  title="rename session"
+                  buttonText="rename"
+                  defaultValue={activeSession.name}
+                  onOk={this.handleRename.bind(this)} />
+              <button onClick={this.restoreSession.bind(this)}>
+                restore
+              </button>
+            </div>
           </div>
           <div className={styles.panelBody}>
             <WindowList
@@ -58,7 +74,10 @@ class SessionPanel extends Component {
 
 const mapStateToProps = (state) => ({
   sessions: state.sessions.list,
-  activeSessionId: state.sessions.activeSessionId
+  activeSessionId: state.sessions.activeSessionId,
+  activeSession: state.sessions.list.find(s =>
+    s.id === state.sessions.activeSessionId
+  )
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -11,6 +11,12 @@ class Window extends Component {
     deleteTab: PropTypes.func.isRequired
   };
 
+  restoreWindow() {
+    chrome.windows.create({
+      url: this.props.tabs.map(t => t.url)
+    });
+  }
+
   render() {
     const { tabs, name, id, deleteWindow, deleteTab } = this.props;
 
@@ -18,7 +24,11 @@ class Window extends Component {
       <div>
         <h2>
           <button onClick={() => deleteWindow(id)}>x</button>
-          {name}
+          <span
+              onClick={this.restoreWindow.bind(this)}
+              style={{ cursor: 'pointer' }}>
+            {name}
+          </span>
         </h2>
         <TabList
             tabs={tabs}

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { Window } from '.';
+import Window from './Window';
 
 class WindowList extends Component {
 

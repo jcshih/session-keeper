@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import styles from './Panel.css';
-import { WindowList, ButtonModal } from '../components';
+import { ButtonModal } from '../components';
+import { WindowList } from '../components/CurrentWindows';
 
 import {
   getCurrentWindows,

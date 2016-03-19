@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { TabList } from '.';
+import TabList from './TabList';
 
 class Window extends Component {
 

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { FilterTab } from '../containers';
+import FilterTab from './FilterTab';
 
 class TabList extends Component {
 

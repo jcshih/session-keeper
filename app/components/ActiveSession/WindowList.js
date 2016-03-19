@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
 
 import Window from './Window';
-import { TAB } from '../../constants';
+import { SESSION_TAB, CURRENT_TAB } from '../../constants';
 
 class WindowList extends Component {
 
@@ -40,7 +40,7 @@ const tabTarget = {
   }
 };
 
-WindowList = DropTarget(TAB, tabTarget, connect => ({
+WindowList = DropTarget([ SESSION_TAB, CURRENT_TAB ], tabTarget, connect => ({
   connectDropTarget: connect.dropTarget()
 }))(WindowList);
 

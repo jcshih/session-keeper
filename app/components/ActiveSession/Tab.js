@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
-import { TAB } from '../../constants';
+import { SESSION_TAB, CURRENT_TAB } from '../../constants';
 
 class Tab extends Component {
 
@@ -9,6 +9,7 @@ class Tab extends Component {
     windowId: PropTypes.string.isRequired,
     deleteTab: PropTypes.func.isRequired,
     showUrl: PropTypes.bool.isRequired,
+    dragType: PropTypes.string.isRequired,
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired
@@ -24,9 +25,12 @@ class Tab extends Component {
       connectDropTarget,
       isDragging
     } = this.props;
+    const dragging = 'dragging' in this.props.tab
+      ? this.props.tab.dragging
+      : false;
 
     return connectDragSource(connectDropTarget(
-      <div style={{opacity: isDragging ? 0 : 1}}>
+      <div style={{opacity: isDragging || dragging ? 0 : 1}}>
         <h4>
           <button onClick={() => deleteTab(windowId, id)}>x</button>
           {title}
@@ -41,10 +45,11 @@ class Tab extends Component {
 
 const tabSource = {
   beginDrag(props) {
-    const { windowId, tab: { id: tabId } } = props;
+    const { windowId, tab: { id: tabId }, dragType } = props;
     return {
       id: [ windowId, tabId ],
-      originalIndex: props.findTab(tabId).index
+      originalIndex: props.findTab(tabId).index,
+      dragType
     };
   },
 
@@ -59,23 +64,30 @@ const tabTarget = {
   },
 
   hover(props, monitor) {
-    const { id: [ draggedWindowId, draggedTabId ] } = monitor.getItem();
+    const {
+      id: [ draggedWindowId, draggedTabId ],
+      dragType
+    } = monitor.getItem();
     const {
       windowId: overWindowId,
       tab: { id: overTabId }
     } = props;
     if (draggedTabId !== overTabId) {
       const { index: overIndex } = props.findTab(overTabId);
-      props.moveTab(draggedTabId, overIndex);
+      if (dragType === SESSION_TAB) {
+        props.moveTab(draggedTabId, overIndex);
+      } else if (dragType === CURRENT_TAB) {
+        props.moveCurrentTab(draggedWindowId, draggedTabId, overIndex);
+      }
     }
   }
 };
 
-Tab = DragSource(TAB, tabSource, (connect, monitor) => ({
+Tab = DragSource(SESSION_TAB, tabSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging()
 }))(Tab);
-Tab = DropTarget(TAB, tabTarget, connect => ({
+Tab = DropTarget([ SESSION_TAB, CURRENT_TAB ], tabTarget, connect => ({
   connectDropTarget: connect.dropTarget()
 }))(Tab);
 

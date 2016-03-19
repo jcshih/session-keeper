@@ -17,7 +17,7 @@ class SessionPanel extends Component {
   static propTypes = {
     sessions: PropTypes.array.isRequired,
     activeSessionId: PropTypes.string,
-    activeSession: PropTypes.object.isRequired
+    activeSession: PropTypes.object
   };
 
   handleRename(name) {
@@ -36,9 +36,9 @@ class SessionPanel extends Component {
     const {
       activeSessionId,
       sessions,
+      activeSession,
       actions: { deleteWindow, deleteTab }
     } = this.props;
-    const activeSession = sessions.find(({ id: id }) => id === activeSessionId);
 
     return activeSession
       ? (

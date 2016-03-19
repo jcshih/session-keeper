@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import FilterTab from './FilterTab';
+import TabContainer from './TabContainer';
 
 class TabList extends Component {
 
@@ -16,7 +16,7 @@ class TabList extends Component {
     return (
       <div>
         {tabs.map(tab =>
-          <FilterTab
+          <TabContainer
               tab={tab}
               windowId={windowId}
               deleteTab={deleteTab}

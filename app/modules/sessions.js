@@ -5,6 +5,7 @@ const SAVE = 'sessions/SAVE';
 const SET_ACTIVE_SESSION = 'sessions/SET_ACTIVE_SESSION';
 const RENAME_SESSION = 'sessions/RENAME_SESSION';
 const MOVE_SESSION = 'session/MOVE_SESSION';
+const MOVE_TAB = 'session/MOVE_TAB';
 const DELETE_SESSION = 'sessions/DELETE_SESSION';
 const DELETE_WINDOW = 'sessions/DELETE_WINDOW';
 const DELETE_TAB = 'sessions/DELETE_TAB';
@@ -51,6 +52,8 @@ const sessions = (state = initialState, action) => {
           ]
         }
       });
+    case MOVE_TAB:
+      return tab(state, action);
     case DELETE_SESSION:
       const index = state.list.findIndex(session => session.id === action.id);
       const activeId = state.activeSessionId === state.list[index].id
@@ -93,10 +96,45 @@ const window = (state, action) => {
 };
 
 const tab = (state, action) => {
+  const sessionIndex = state.list
+                            .findIndex(s => s.id === state.activeSessionId);
   switch (action.type) {
+    case MOVE_TAB:
+      const [ fromWindowIndex, fromTabIndex ] = action.fromIndex;
+      const [ toWindowIndex, toTabIndex ] = action.toIndex;
+
+      let splice;
+      if (fromWindowIndex === toWindowIndex) {
+        splice = {
+          [fromWindowIndex]: {
+            tabs: {
+              $splice: [[ fromTabIndex, 1 ], [ toTabIndex, 0, action.tab ]]
+            }
+          }
+        };
+      } else {
+        splice = {
+          [fromWindowIndex]: {
+            tabs: {
+              $splice: [[ fromTabIndex, 1 ]]
+            }
+          },
+          [toWindowIndex]: {
+            tabs: {
+              $splice: [[ toTabIndex, 0, action.tab ]]
+            }
+          }
+        };
+      }
+
+      return update(state, {
+        list: {
+          [sessionIndex]: {
+            windows: splice
+          }
+        }
+      });
     case DELETE_TAB:
-      const sessionIndex = state.list
-                                .findIndex(s => s.id === state.activeSessionId);
       const windowIndex = state.list[sessionIndex]
                                .windows
                                .findIndex(win => win.id === action.windowId);
@@ -145,6 +183,13 @@ const moveSession = (session, fromIndex, toIndex) => ({
   toIndex
 });
 
+const moveTab = (tab, fromIndex, toIndex) => ({
+  type: MOVE_TAB,
+  tab,
+  fromIndex,
+  toIndex
+});
+
 const deleteSession = (id) => ({
   type: DELETE_SESSION,
   id
@@ -167,6 +212,7 @@ export {
   setActiveSession,
   renameSession,
   moveSession,
+  moveTab,
   deleteSession,
   deleteWindow,
   deleteTab

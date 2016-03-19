@@ -7,6 +7,6 @@ const mapStateToProps = (state) => ({
   showUrl: state.filter.url
 });
 
-const FilterTab = connect(mapStateToProps)(Tab);
+const TabContainer = connect(mapStateToProps)(Tab);
 
-export default FilterTab;
+export default TabContainer;

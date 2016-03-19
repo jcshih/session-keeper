@@ -161,10 +161,29 @@ const tab = (state, action) => {
 };
 
 /* Actions */
-const saveSession = (session) => ({
-  type: SAVE,
-  session
-});
+const saveSession = (session) => {
+  session = update(session, {
+    windows: {
+      $apply: ws => ws.map(w => update(w, {
+        id: {
+          $apply: id => `${id}-${Math.random().toString().slice(2)}`
+        },
+        tabs: {
+          $apply: ts => ts.map(t => update(t, {
+            id: {
+              $apply: id => `${id}-${Math.random().toString().slice(2)}`
+            }
+          }))
+        }
+      }))
+    }
+  });
+
+  return {
+    type: SAVE,
+    session
+  }
+};
 
 const setActiveSession = (id) => ({
   type: SET_ACTIVE_SESSION,

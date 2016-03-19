@@ -49,11 +49,11 @@ const getTabs = (windows, dispatch) => {
         .then(tab => [ windows, tab.id ])
         .then(([ windows, currentTabId ]) => {
           windows = windows.map(win => ({
-            id: `${win.id}-${Math.random().toString().slice(2)}`,
+            id: String(win.id),
             tabs: win.tabs
                      .filter(tab => tab.id !== currentTabId)
                      .map(tab => ({
-                       id: `${tab.id}-${Math.random().toString().slice(2)}`,
+                       id: String(tab.id),
                        title: tab.title,
                        url: tab.url,
                        favIconUrl: tab.favIconUrl

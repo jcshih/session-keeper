@@ -38,8 +38,16 @@ class Session extends Component {
       <div
           onClick={() => setActive(id)}
           className={classes}>
-        {name}
-        <button onClick={this.handleDelete.bind(this)}>x</button>
+        <div>
+          <button
+              onClick={this.handleDelete.bind(this)}
+              className={styles.close}>
+            x
+          </button>
+        </div>
+        <div>
+          {name}
+        </div>
       </div>
     ));
   }

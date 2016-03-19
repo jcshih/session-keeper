@@ -45,11 +45,13 @@ class CurrentPanel extends Component {
       <div className={styles.panel}>
         <div className={styles.panelHeader}>
           <h2>Current Windows</h2>
-          <button onClick={getCurrentWindows}>refresh</button>
-          <ButtonModal
-              title="enter name"
-              buttonText="save"
-              onOk={this.handleSave.bind(this)} />
+          <div className={styles.panelHeaderMenu}>
+            <button onClick={getCurrentWindows}>refresh</button>
+            <ButtonModal
+                title="enter name"
+                buttonText="save"
+                onOk={this.handleSave.bind(this)} />
+          </div>
         </div>
         <div className={styles.panelBody}>
           <WindowList

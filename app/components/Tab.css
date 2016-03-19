@@ -1,0 +1,22 @@
+.title {
+  margin-bottom: 0;
+}
+
+.url {
+  margin-left: 40px;
+}
+
+.close {
+  border-radius: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: rgba(1, 1, 1, 0.5);
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+.close:hover {
+  color: rgba(1, 1, 1, 1);
+}
+

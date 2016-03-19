@@ -3,7 +3,7 @@
   flex: 1;
   flex-direction: column;
   margin-right: 5px;
-  border: 1px solid black;
+  background: #eeeeee;
 }
 
 .panelHeader {
@@ -11,6 +11,25 @@
   display: flex;
   flex: 0;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  background: lightsteelblue;
+}
+
+.panelHeader button {
+  border-radius: 0;
+  background-color: lightgrey;
+  border: none;
+  outline: none;
+}
+
+.panelHeader button {
+  margin-left: 5px;
+}
+
+.panelHeaderMenu {
+  display: flex;
+  flex-direction: row;
 }
 
 .panelBody {
@@ -19,5 +38,5 @@
   flex-direction: column;
   overflow-y: scroll;
   overflow-x: hidden;
-  border: 1px solid black;
+  padding: 5px;
 }

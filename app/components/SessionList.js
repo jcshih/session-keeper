@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
 
+import styles from './SessionList.css';
 import { ActiveSession } from '../containers';
 import { SESSION } from '../constants';
 
@@ -34,20 +35,25 @@ class SessionList extends Component {
 
   render() {
     const { sessions, setActive, deleteSession, connectDropTarget } = this.props;
+    const sessionsToShow = sessions.map(session =>
+      <ActiveSession
+          findSession={this.findSession.bind(this)}
+          moveSession={this.moveSession.bind(this)}
+          name={session.name}
+          windows={session.windows}
+          setActive={setActive}
+          deleteSession={deleteSession}
+          id={session.id}
+          key={session.id} />
+    );
 
     return connectDropTarget(
-      <div>
-        {sessions.map(session =>
-          <ActiveSession
-              findSession={this.findSession.bind(this)}
-              moveSession={this.moveSession.bind(this)}
-              name={session.name}
-              windows={session.windows}
-              setActive={setActive}
-              deleteSession={deleteSession}
-              id={session.id}
-              key={session.id} />
-         )}
+      <div className={styles.sessionList}>
+        {sessionsToShow.length > 0
+          ? sessionsToShow
+          : (
+            <h2 style={{ textAlign: 'center' }}>sessions</h2>
+          )}
       </div>
     );
   }

@@ -13,7 +13,9 @@ class Root extends Component {
     const { store } = this.props;
     return (
       <Provider store={store}>
-        <App />
+        <div style={{ height: '100vh', background: '#ffffff' }}>
+          <App />
+        </div>
       </Provider>
     );
   }

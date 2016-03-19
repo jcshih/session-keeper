@@ -1,10 +1,10 @@
 {
   "version": "0.0.0",
-  "name": "Insert name",
+  "name": "Session Keeper",
   "manifest_version": 2,
-  "description": "Insert description",
+  "description": "Save window configurations for future use",
   "browser_action": {
-    "default_title": "Insert title"
+    "default_title": "Session Keeper"
   },
   "icons": {
     "48": "img/icon-48.png",

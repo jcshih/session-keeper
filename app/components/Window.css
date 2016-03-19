@@ -1,0 +1,12 @@
+.close {
+  border-radius: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: rgba(1, 1, 1, 0.5);
+  padding-right: 10px;
+}
+
+.close:hover {
+  color: rgba(1, 1, 1, 1);
+}

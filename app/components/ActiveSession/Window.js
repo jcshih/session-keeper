@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-
 import TabList from './TabList';
+import styles from '../Window.css';
 
 class Window extends Component {
 
@@ -23,7 +23,11 @@ class Window extends Component {
     return (
       <div>
         <h2>
-          <button onClick={() => deleteWindow(id)}>x</button>
+          <button
+              onClick={() => deleteWindow(id)}
+              className={styles.close}>
+            x
+          </button>
           <span
               onClick={this.restoreWindow.bind(this)}
               style={{ cursor: 'pointer' }}>

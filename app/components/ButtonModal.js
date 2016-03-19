@@ -4,15 +4,29 @@ import Modal from 'react-modal';
 
 const modalStyles = {
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)'
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   content: {
     width: '250px',
-    height: '150px',
+    height: '100px',
     top: '50%',
     left: '50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
+    textAlign: 'center',
+    backgroundColor: '#eeeeee'
   }
+};
+
+const buttonsStyles = {
+  paddingTop: '15px'
+};
+
+const buttonStyle = {
+  borderRadius: 0,
+  backgroundColor: 'lightgrey',
+  border: 'none',
+  outline: 'none',
+  margin: '0 5px'
 };
 
 class ButtonModal extends Component {
@@ -82,8 +96,18 @@ class ButtonModal extends Component {
               onKeyPress={this.handleKeyPress.bind(this)}
               value={this.state.value}
               ref="valueInput" />
-          <button onClick={this.handleOk.bind(this)}>ok</button>
-          <button onClick={this.closeModal.bind(this)}>cancel</button>
+          <div style={buttonsStyles}>
+            <button
+                onClick={this.handleOk.bind(this)}
+                style={buttonStyle}>
+              ok
+            </button>
+            <button
+                onClick={this.closeModal.bind(this)}
+                style={buttonStyle}>
+              cancel
+            </button>
+          </div>
         </Modal>
       </div>
     );

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
+import styles from '../Tab.css';
 import { CURRENT_TAB } from '../../constants';
 
 class Tab extends Component {
@@ -26,11 +27,20 @@ class Tab extends Component {
 
     return connectDragSource(
       <div style={{opacity: isDragging ? 0 : 1}}>
-        <h4>
-          <button onClick={() => deleteTab(windowId, id)}>x</button>
-          {title}
-          {showUrl ? url : null}
+        <h4 className={styles.title}>
+          <button
+              onClick={() => deleteTab(windowId, id)}
+              className={styles.close}>
+            x
+          </button>
+          <a href={url} title={title} target="_blank">{title}</a>
         </h4>
+        {showUrl
+          ? (
+            <div className={styles.url}>
+              <a href={url} title={url} target="_blank">{url}</a>
+            </div>
+          ) : null}
       </div>
     );
   }

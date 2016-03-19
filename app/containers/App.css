@@ -1,10 +1,22 @@
 .app {
+  font-family: 'Helvetica Neue';
   max-height: 100vh;
-  height: 100vh;
+  height: calc(100vh - 5px);
   width: 100vw;
   display: flex;
   flex-direction: row;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
+.app a {
+  text-decoration: none;
+  color: black;
+}
+
+.app a:hover {
+  text-decoration: underline;
 }
 
 .main {

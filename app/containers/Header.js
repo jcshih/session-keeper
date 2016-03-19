@@ -13,8 +13,10 @@ class Header extends Component {
 
     return (
       <div className={styles.header}>
-        Header
-        <button onClick={toggleUrl}>toggle url</button>
+        <h1>Session Keeper</h1>
+        <div>
+          <button onClick={toggleUrl}>toggle urls</button>
+        </div>
       </div>
     );
   }

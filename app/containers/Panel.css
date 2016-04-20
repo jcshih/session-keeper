@@ -1,6 +1,7 @@
 .panel {
+  width: 0;
   display: flex;
-  flex: 1;
+  flex: 1 1 0;
   flex-direction: column;
   margin-right: 5px;
   background: #eeeeee;
@@ -9,7 +10,7 @@
 .panelHeader {
   height: 30px;
   display: flex;
-  flex: 0;
+  flex: 0 0;
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;

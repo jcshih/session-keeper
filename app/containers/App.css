@@ -4,7 +4,6 @@
   height: calc(100vh - 5px);
   width: 100vw;
   display: flex;
-  flex-direction: row;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: clip;
@@ -21,8 +20,8 @@
 
 .main {
   height: 100%;
+  width: calc(100% - 210px);
   display: flex;
-  flex: 1;
   flex-direction: column;
 }
 
